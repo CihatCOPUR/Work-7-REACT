@@ -7,7 +7,6 @@ const app = express();
 
 app.use(cors());
 
-
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -19,9 +18,7 @@ mongoose.connect('mongodb://localhost/todo-app', { useNewUrlParser: true, useUni
 // MongoDB modeli oluşturma
 const todoSchema = new mongoose.Schema({
     todo: String,
-    lastDate: Date,
     isDone: Boolean,
-
 });
 
 const Todo = mongoose.model('Todo', todoSchema);
@@ -39,12 +36,11 @@ app.get('/', async (req, res) => {
 app.post('/', async (req, res) => {
     try {
         // İstekten gönderilen verileri alın
-        const { todo, lastDate, isDone } = req.body;
+        const { todo, isDone } = req.body;
 
         // Yeni bir Todo nesnesi oluşturun
         const newTodo = new Todo({
             todo: todo,
-            lastDate: lastDate,
             isDone: isDone
         });
 
